@@ -26,7 +26,10 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('Deliver for development') {
+            when {
+                branch 'development'
+            }
             agent {
                 docker {
                     image 'cdrx/pyinstaller-linux:python2'
@@ -34,6 +37,7 @@ pipeline {
             }
             steps {
                 sh 'pyinstaller --onefile sources/add2vals.py'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
             }
             post {
                 success {
