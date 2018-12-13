@@ -27,13 +27,13 @@ pipeline {
             }
         }
         stage('Deliver for development') {
-            when {
-                branch 'development'
-            }
             agent {
                 docker {
                     image 'cdrx/pyinstaller-linux:python2'
                 }
+            }
+            when {
+                branch 'development'
             }
             steps {
                 sh 'pyinstaller --onefile sources/add2vals.py'
